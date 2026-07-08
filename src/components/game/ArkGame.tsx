@@ -89,18 +89,12 @@ export default function ArkGame() {
         type: "result",
         coord: msg.coord,
         result: res.result,
-        sunkCells: res.result === "sunk"
-          ? cellsFor(
-              dinos.find((d) => d.hits.every(Boolean) && cellsFor(d.row, d.col, d.size, d.orientation).some((c) => c.row === msg.coord.row && c.col === msg.coord.col))!.row,
-              dinos.find((d) => d.hits.every(Boolean) && cellsFor(d.row, d.col, d.size, d.orientation).some((c) => c.row === msg.coord.row && c.col === msg.coord.col))!.col,
-              dinos.find((d) => d.hits.every(Boolean) && cellsFor(d.row, d.col, d.size, d.orientation).some((c) => c.row === msg.coord.row && c.col === msg.coord.col))!.size,
-              dinos.find((d) => d.hits.every(Boolean) && cellsFor(d.row, d.col, d.size, d.orientation).some((c) => c.row === msg.coord.row && c.col === msg.coord.col))!.orientation,
-            )
-          : undefined,
+        sunkCells: res.sunkCells,
         gameOver: res.gameOver,
       });
       if (res.gameOver) { play("lose"); setPhase("defeat"); }
       else { play(res.result === "miss" ? "miss" : "hit"); setPhase("my-turn"); }
+
     } else if (msg.type === "result") {
       setMyShotsFired((s) => [...s, { coord: msg.coord, result: msg.result }]);
       if (msg.gameOver) { play("win"); setPhase("victory"); }
