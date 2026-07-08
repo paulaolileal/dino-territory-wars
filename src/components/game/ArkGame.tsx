@@ -564,8 +564,8 @@ function BoardGrid({ renderCell, onClick, onEnter, onLeave }: GridProps) {
         <div key={c} className="ark-axis">{c}</div>
       ))}
       {Array.from({ length: BOARD_SIZE }).map((_, row) => (
-        <>
-          <div key={`r${row}`} className="ark-axis">{row + 1}</div>
+        <Fragment key={`row-${row}`}>
+          <div className="ark-axis">{row + 1}</div>
           {Array.from({ length: BOARD_SIZE }).map((_, col) => (
             <button
               key={`${row}-${col}`}
@@ -577,8 +577,9 @@ function BoardGrid({ renderCell, onClick, onEnter, onLeave }: GridProps) {
               {renderCell(row, col)}
             </button>
           ))}
-        </>
+        </Fragment>
       ))}
+
     </div>
   );
 }
