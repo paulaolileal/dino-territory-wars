@@ -16,7 +16,6 @@ import { play, playDinoDamage } from "@/game/sound";
 export type Phase =
   | "home"
   | "creating"
-  | "joining"
   | "waiting"
   | "connecting"
   | "placement"
@@ -151,10 +150,6 @@ export function useArkMatch() {
       setStatus("Aguardando adversário...");
       setPhase("waiting");
     }, size);
-  }
-
-  function startJoin() {
-    setPhase("joining");
   }
 
   function doJoin() {
@@ -324,7 +319,6 @@ export function useArkMatch() {
     previewValid,
 
     createMatch,
-    startJoin,
     doJoin,
     copyCode,
     disconnect,

@@ -38,7 +38,7 @@ export default function BattleView(p: BattleViewProps) {
   return (
     <div className="mt-4 grid md:grid-cols-2 gap-4">
       <div className={`ark-card p-3 md:p-4 ${p.phase === "their-turn" ? "ark-active" : ""}`}>
-        <h3 className="text-sm font-semibold mb-2 text-muted-foreground flex items-center justify-between">
+        <h3 className="ark-muted text-sm font-semibold mb-2 flex items-center justify-between">
           <span>Meu território</span>
           {p.phase === "their-turn" && (
             <span className="text-xs text-amber-300 animate-pulse">sob ataque</span>
@@ -57,7 +57,7 @@ export default function BattleView(p: BattleViewProps) {
       </div>
 
       <div className={`ark-card p-3 md:p-4 ${p.phase === "my-turn" ? "ark-active" : ""}`}>
-        <h3 className="text-sm font-semibold mb-2 text-muted-foreground flex items-center justify-between">
+        <h3 className="ark-muted text-sm font-semibold mb-2 flex items-center justify-between">
           <span>Território inimigo</span>
           {p.phase === "my-turn" && (
             <span className="text-xs text-emerald-300 animate-pulse">seu turno</span>

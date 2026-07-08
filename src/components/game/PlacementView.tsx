@@ -148,7 +148,7 @@ export default function PlacementView(p: PlacementViewProps) {
                   <img src={s.icon} alt={s.name} className="w-8 h-8 object-contain invert" />
                   {s.name}
                 </span>
-                <span className="text-sm text-muted-foreground">
+                <span className="ark-muted text-sm">
                   {s.cells.length} casas {i < p.placingIdx ? "✓" : ""}
                 </span>
               </li>

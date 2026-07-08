@@ -5,7 +5,6 @@ import type { Phase } from "@/game/useArkMatch";
 const MENU_PHASES = new Set<Phase>([
   "home",
   "creating",
-  "joining",
   "waiting",
   "connecting",
   "placement",

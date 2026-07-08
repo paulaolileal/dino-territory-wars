@@ -36,7 +36,7 @@ export default function QrScanDialog({ open, onOpenChange, onScan }: QrScanDialo
           <DialogTitle>Escanear código da sala</DialogTitle>
         </DialogHeader>
         {error ? (
-          <p className="text-sm text-muted-foreground">{error}</p>
+          <p className="ark-muted text-sm">{error}</p>
         ) : (
           <video ref={videoRef} className="w-full rounded-lg" muted playsInline />
         )}

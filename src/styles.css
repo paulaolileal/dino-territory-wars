@@ -262,6 +262,47 @@
   cursor: not-allowed;
 }
 
+.ark-tabs-list {
+  display: inline-flex;
+  width: 100%;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.ark-tabs-trigger {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  border-radius: 9px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(232, 234, 216, 0.64);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.ark-tabs-trigger[data-state="active"] {
+  background: linear-gradient(180deg, #6ea23d, #4b7727);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(80, 130, 40, 0.35);
+}
+.ark-tabs-trigger:hover:not([data-state="active"]) {
+  background: rgba(255, 255, 255, 0.06);
+  color: #f2e6cc;
+}
+.ark-tabs-trigger:focus-visible {
+  outline: 2px solid rgba(180, 220, 140, 0.6);
+  outline-offset: 2px;
+}
+
 .ark-btn-icon {
   width: 2.75rem;
   height: 2.75rem;
@@ -310,6 +351,10 @@
   cursor: pointer;
 }
 
+.ark-muted {
+  color: rgba(232, 234, 216, 0.64);
+}
+
 .ark-input {
   padding: 0.7rem 0.9rem;
   border-radius: 10px;
@@ -335,14 +380,21 @@
   color: #e2c58a;
 }
 
-/* Board grid: 1 label col + 10 cells */
+/* Board grid: 1 label col + 10 cells. Width/height are set inline in
+   BoardGrid via useSquareSize once measured (largest square that fits the
+   real available width and remaining viewport height); aspect-ratio +
+   width:100% is just the pre-measurement fallback so there's no flash of
+   an unsized box. */
 .ark-board {
   position: relative;
   display: grid;
+  width: 100%;
+  max-width: 100%;
   aspect-ratio: 1 / 1;
   grid-template-columns: 24px repeat(10, minmax(0, 1fr));
   grid-template-rows: 24px repeat(10, minmax(0, 1fr));
   gap: 3px;
+  margin: 0 auto;
   user-select: none;
   background-image: url("/assets/backgrounds/board-base.jpg");
   background-size: cover;

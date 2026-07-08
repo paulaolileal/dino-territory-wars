@@ -1,7 +1,5 @@
-import { useState } from "react";
-import { Camera, Copy, MessageCircle } from "lucide-react";
+import { Copy, MessageCircle } from "lucide-react";
 import { QRCodeSVG } from "qrcode.react";
-import QrScanDialog from "./QrScanDialog";
 
 interface WaitingRoomProps {
   code: string;
@@ -42,64 +40,20 @@ export function WaitingRoom({ code, copyOk, onCopy, onCancel }: WaitingRoomProps
           Cancelar
         </button>
       </div>
-      <p className="text-sm text-muted-foreground animate-pulse">
-        Aguardando conexão do adversário...
-      </p>
-    </div>
-  );
-}
-
-interface JoinFormProps {
-  joinCode: string;
-  onChange: (value: string) => void;
-  onConnect: () => void;
-  onBack: () => void;
-}
-
-export function JoinForm({ joinCode, onChange, onConnect, onBack }: JoinFormProps) {
-  const [scanOpen, setScanOpen] = useState(false);
-
-  function handleScan(value: string) {
-    setScanOpen(false);
-    onChange(value);
-    onConnect();
-  }
-
-  return (
-    <div className="ark-card p-6 mt-6 max-w-lg mx-auto flex flex-col gap-4">
-      <h2 className="text-lg font-bold">Código da partida</h2>
-      <input
-        value={joinCode}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder="cole o código aqui"
-        className="ark-input"
-      />
-      <button onClick={() => setScanOpen(true)} className="ark-btn-ghost" type="button">
-        <Camera className="w-4 h-4 inline-block mr-1.5" />
-        Escanear QR Code
-      </button>
-      <div className="flex gap-2">
-        <button onClick={onConnect} className="ark-btn-primary flex-1" type="button">
-          Conectar
-        </button>
-        <button onClick={onBack} className="ark-btn-ghost" type="button">
-          Voltar
-        </button>
-      </div>
-      <QrScanDialog open={scanOpen} onOpenChange={setScanOpen} onScan={handleScan} />
+      <p className="ark-muted text-sm animate-pulse">Aguardando conexão do adversário...</p>
     </div>
   );
 }
 
 export function ConnectingStatus({ status }: { status: string }) {
-  return <div className="text-center mt-10 text-muted-foreground animate-pulse">{status}</div>;
+  return <div className="ark-muted text-center mt-10 animate-pulse">{status}</div>;
 }
 
 export function LostConnection({ onBack }: { onBack: () => void }) {
   return (
     <div className="ark-card p-6 mt-10 text-center max-w-lg mx-auto">
       <h2 className="text-lg font-bold">Conexão perdida</h2>
-      <p className="text-sm text-muted-foreground mt-2">O adversário foi desconectado.</p>
+      <p className="ark-muted text-sm mt-2">O adversário foi desconectado.</p>
       <button onClick={onBack} className="ark-btn-primary mt-4" type="button">
         Voltar ao início
       </button>

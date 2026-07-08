@@ -3,7 +3,7 @@ import { useArkMatch, type Phase } from "@/game/useArkMatch";
 import { useBackgroundMusic } from "@/hooks/use-background-music";
 import MusicToggle from "./MusicToggle";
 import HomeScreen from "./HomeScreen";
-import { ConnectingStatus, JoinForm, LostConnection, WaitingRoom } from "./LobbyScreens";
+import { ConnectingStatus, LostConnection, WaitingRoom } from "./LobbyScreens";
 import ResultBanner from "./ResultBanner";
 
 const PlacementView = lazy(() => import("./PlacementView"));
@@ -20,11 +20,11 @@ export default function ArkGame() {
 
   function handleJoin() {
     music.unlock();
-    match.startJoin();
+    match.doJoin();
   }
 
   return (
-    <div className="min-h-screen ark-bg text-foreground">
+    <div className="min-h-screen ark-bg text-foreground flex flex-col">
       <header className="ark-header px-4 py-4 md:px-8 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img src="/assets/branding/ark-logo.png" alt="ARK" className="ark-logo-img" />
@@ -32,7 +32,7 @@ export default function ArkGame() {
             <h1 className="text-xl md:text-2xl font-bold tracking-wide ark-title">
               ARK: Territory Wars
             </h1>
-            <p className="text-xs text-muted-foreground">Batalha de tribos com dinossauros</p>
+            <p className="ark-muted text-xs">Batalha de tribos com dinossauros</p>
           </div>
         </div>
         <div className="flex items-center gap-3 text-xs">
@@ -58,8 +58,21 @@ export default function ArkGame() {
         </div>
       </header>
 
-      <main className="px-4 pb-16 md:px-8 max-w-6xl mx-auto">
-        {match.phase === "home" && <HomeScreen onCreate={handleCreate} onJoin={handleJoin} />}
+      <main
+        className={
+          match.phase === "home"
+            ? "flex-1 flex items-center justify-center px-4 pb-16 md:px-8"
+            : "px-4 pb-16 md:px-8 max-w-[1600px] mx-auto"
+        }
+      >
+        {match.phase === "home" && (
+          <HomeScreen
+            onCreate={handleCreate}
+            joinCode={match.joinCode}
+            onJoinCodeChange={match.setJoinCode}
+            onJoin={handleJoin}
+          />
+        )}
 
         {match.phase === "waiting" && (
           <WaitingRoom
@@ -67,15 +80,6 @@ export default function ArkGame() {
             copyOk={match.copyOk}
             onCopy={match.copyCode}
             onCancel={match.disconnect}
-          />
-        )}
-
-        {match.phase === "joining" && (
-          <JoinForm
-            joinCode={match.joinCode}
-            onChange={match.setJoinCode}
-            onConnect={match.doJoin}
-            onBack={() => match.setPhase("home")}
           />
         )}
 
@@ -157,7 +161,6 @@ function phaseLabel(p: Phase): string {
   const m: Record<Phase, string> = {
     home: "Início",
     creating: "Criando...",
-    joining: "Entrando...",
     waiting: "Aguardando jogador...",
     connecting: "Conectando...",
     placement: "Posicionando criaturas",
