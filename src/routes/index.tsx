@@ -6,10 +6,17 @@ const ArkGame = lazy(() => import("@/components/game/ArkGame"));
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "ARK Dino Wars — Batalha de tribos com dinossauros" },
-      { name: "description", content: "Jogue Batalha Naval no universo ARK: posicione seus dinossauros e conquiste a base inimiga em partidas P2P." },
-      { property: "og:title", content: "ARK Dino Wars" },
-      { property: "og:description", content: "Batalha de tribos com dinossauros, multiplayer P2P direto no navegador." },
+      { title: "ARK: Territory Wars — Batalha de tribos com dinossauros" },
+      {
+        name: "description",
+        content:
+          "Jogue Batalha Naval no universo ARK: posicione seus dinossauros e conquiste a base inimiga em partidas P2P.",
+      },
+      { property: "og:title", content: "ARK: Territory Wars" },
+      {
+        property: "og:description",
+        content: "Batalha de tribos com dinossauros, multiplayer P2P direto no navegador.",
+      },
     ],
   }),
   component: Index,
@@ -21,7 +28,9 @@ function Index() {
   if (!mounted) {
     return (
       <div className="ark-bg flex min-h-screen items-center justify-center">
-        <div className="text-sm text-muted-foreground animate-pulse">Carregando ARK Dino Wars...</div>
+        <div className="text-sm text-muted-foreground animate-pulse">
+          Carregando ARK: Territory Wars...
+        </div>
       </div>
     );
   }
