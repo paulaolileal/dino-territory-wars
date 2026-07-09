@@ -9,10 +9,7 @@ interface WaitingRoomProps {
 }
 
 export function WaitingRoom({ code, copyOk, onCopy, onCancel }: WaitingRoomProps) {
-  const joinUrl = `${window.location.origin}/?code=${encodeURIComponent(code)}`;
-  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
-    `Vem batalhar comigo em ARK: Territory Wars! 🦖 Entre direto pelo link: ${joinUrl}`,
-  )}`;
+  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(code)}`;
 
   return (
     <div className="ark-card p-6 mt-6 max-w-lg mx-auto text-center flex flex-col gap-4">
