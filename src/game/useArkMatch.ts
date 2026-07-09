@@ -167,14 +167,25 @@ export function useArkMatch() {
     }, size);
   }
 
-  function doJoin() {
-    if (!joinCode.trim()) return;
+  function doJoin(codeOverride?: string) {
+    const codeToUse = (codeOverride ?? joinCode).trim();
+    if (!codeToUse) return;
     setPhase("connecting");
     setStatus("Conectando...");
     initPeer(() => {
-      peerRef.current?.connectTo(joinCode.trim());
+      peerRef.current?.connectTo(codeToUse);
     });
   }
+
+  // Auto-join when arriving from a shared link like /?code=<peerId>
+  useEffect(() => {
+    const codeFromUrl = new URLSearchParams(window.location.search).get("code");
+    if (!codeFromUrl) return;
+    window.history.replaceState({}, "", window.location.pathname);
+    setJoinCode(codeFromUrl);
+    doJoin(codeFromUrl);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function copyCode() {
     navigator.clipboard?.writeText(myPeerId).then(() => {

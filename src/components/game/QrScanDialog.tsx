@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import QrScanner from "qr-scanner";
-import QrScannerWorkerPath from "qr-scanner/qr-scanner-worker.min.js?url";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-
-QrScanner.WORKER_PATH = QrScannerWorkerPath;
 
 interface QrScanDialogProps {
   open: boolean;
@@ -19,13 +16,28 @@ export default function QrScanDialog({ open, onOpenChange, onScan }: QrScanDialo
     if (!open || !videoRef.current) return;
 
     setError(null);
-    const scanner = new QrScanner(videoRef.current, (result) => onScan(result.data), {
-      highlightScanRegion: true,
-      highlightCodeOutline: true,
-    });
-    scanner.start().catch(() => setError("Não foi possível acessar a câmera."));
 
-    return () => scanner.destroy();
+    if (!navigator.mediaDevices?.getUserMedia) {
+      setError("Este navegador não permite acesso à câmera nesta página (é necessário HTTPS).");
+      return;
+    }
+
+    let scanner: QrScanner | null = null;
+    try {
+      scanner = new QrScanner(videoRef.current, (result) => onScan(result.data), {
+        highlightScanRegion: true,
+        highlightCodeOutline: true,
+      });
+      scanner.start().catch((e) => {
+        console.error(e);
+        setError("Não foi possível acessar a câmera.");
+      });
+    } catch (e) {
+      console.error(e);
+      setError("Não foi possível iniciar o leitor de QR code.");
+    }
+
+    return () => scanner?.destroy();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
