@@ -77,16 +77,16 @@ export default function ArkGame() {
               alt="ARK: Territory Wars"
               className="w-full max-w-2xl px-4"
             />
-            <p className="ark-muted text-xs text-center max-w-md px-4">
-              Projeto de fã, sem fins lucrativos e sem nenhum vínculo com a Studio Wildcard —
-              feito por inspiração de quem ama ARK: Survival Evolved.
-            </p>
             <HomeScreen
               onCreate={handleCreate}
               joinCode={match.joinCode}
               onJoinCodeChange={match.setJoinCode}
               onJoin={handleJoin}
             />
+            <p className="ark-card text-xs text-center max-w-md mx-4 px-4 py-2 text-white/90">
+              Projeto de fã, sem fins lucrativos e sem nenhum vínculo com a Studio Wildcard —
+              feito por inspiração de quem ama ARK: Survival Evolved.
+            </p>
           </div>
         )}
 
