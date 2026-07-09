@@ -39,11 +39,13 @@ function ShotMarkers({ map }: { map: Map<string, Shot> }) {
 export default function BattleView(p: BattleViewProps) {
   return (
     <div
-      className="mt-4 grid gap-4 md:grid-cols-[repeat(2,minmax(0,var(--board-max)))] md:justify-center"
+      className="mt-4 h-[calc(100%_-_1rem)] min-h-0 flex flex-col gap-4 md:grid md:grid-cols-[repeat(2,minmax(0,var(--board-max)))] md:grid-rows-[minmax(0,1fr)] md:justify-center"
       style={{ "--board-max": `${BOARD_MAX_SIZE}px` } as CSSProperties}
     >
-      <div className={`ark-card p-3 md:p-4 ${p.phase === "their-turn" ? "ark-active" : ""}`}>
-        <h3 className="ark-muted text-sm font-semibold mb-2 flex items-center justify-between">
+      <div
+        className={`ark-card p-3 md:p-4 flex flex-col min-h-0 flex-1 md:flex-auto ${p.phase === "their-turn" ? "ark-active" : ""}`}
+      >
+        <h3 className="ark-muted text-sm font-semibold mb-2 flex items-center justify-between shrink-0">
           <span>Meu território</span>
           {p.phase === "their-turn" && (
             <span className="text-sm md:text-base font-extrabold uppercase tracking-wide text-amber-300 animate-pulse drop-shadow-[0_0_6px_rgba(252,211,77,0.6)]">
@@ -63,8 +65,10 @@ export default function BattleView(p: BattleViewProps) {
         </BoardGrid>
       </div>
 
-      <div className={`ark-card p-3 md:p-4 ${p.phase === "my-turn" ? "ark-active" : ""}`}>
-        <h3 className="ark-muted text-sm font-semibold mb-2 flex items-center justify-between">
+      <div
+        className={`ark-card p-3 md:p-4 flex flex-col min-h-0 flex-1 md:flex-auto ${p.phase === "my-turn" ? "ark-active" : ""}`}
+      >
+        <h3 className="ark-muted text-sm font-semibold mb-2 flex items-center justify-between shrink-0">
           <span>Território inimigo</span>
           {p.phase === "my-turn" && (
             <span className="text-sm md:text-base font-extrabold uppercase tracking-wide text-emerald-300 animate-pulse drop-shadow-[0_0_6px_rgba(52,211,153,0.6)]">

@@ -28,7 +28,7 @@ export default function BoardGrid({
   const cols = Array.from({ length: size }, (_, i) => String.fromCharCode(65 + i));
 
   return (
-    <div className="w-full">
+    <div className="ark-board-frame">
       <div
         className={`ark-board ${className ?? ""}`}
         style={{

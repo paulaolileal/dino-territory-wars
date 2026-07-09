@@ -9,9 +9,12 @@ import ResultScreen from "./ResultScreen";
 const PlacementView = lazy(() => import("./PlacementView"));
 const BattleView = lazy(() => import("./BattleView"));
 
+const BOARD_PHASES: Phase[] = ["placement", "waiting-opponent", "my-turn", "their-turn"];
+
 export default function ArkGame() {
   const match = useArkMatch();
   const music = useBackgroundMusic(match.phase);
+  const isBoardPhase = BOARD_PHASES.includes(match.phase);
 
   function handleCreate(size: number) {
     music.unlock();
@@ -24,8 +27,8 @@ export default function ArkGame() {
   }
 
   return (
-    <div className="min-h-screen ark-bg text-foreground flex flex-col">
-      <header className="ark-header px-4 py-4 md:px-8 flex items-center justify-between">
+    <div className="h-dvh ark-bg text-foreground flex flex-col overflow-hidden">
+      <header className="ark-header shrink-0 px-4 py-4 md:px-8 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <img src="/assets/branding/ark-logo.png" alt="ARK" className="ark-logo-img" />
           <div>
@@ -61,8 +64,10 @@ export default function ArkGame() {
       <main
         className={
           match.phase === "home"
-            ? "flex-1 flex items-center justify-center px-4 pb-16 md:px-8"
-            : "px-4 pb-16 md:px-8"
+            ? "flex-1 min-h-0 flex items-center justify-center px-4 pb-16 md:px-8 overflow-y-auto"
+            : isBoardPhase
+              ? "flex-1 min-h-0 px-4 pb-16 md:px-8 overflow-hidden"
+              : "flex-1 min-h-0 px-4 pb-16 md:px-8 overflow-y-auto"
         }
       >
         {match.phase === "home" && (

@@ -51,11 +51,11 @@ export default function PlacementView(p: PlacementViewProps) {
 
   return (
     <div
-      className="mt-4 grid gap-4 md:grid-cols-[minmax(0,var(--board-max))_320px] md:justify-center"
+      className="mt-4 h-[calc(100%_-_1rem)] min-h-0 flex flex-col gap-4 md:grid md:grid-cols-[minmax(0,var(--board-max))_320px] md:grid-rows-[minmax(0,1fr)] md:justify-center"
       style={{ "--board-max": `${BOARD_MAX_SIZE}px` } as CSSProperties}
     >
-      <div className="ark-card p-3 md:p-4">
-        <h3 className="ark-section-title text-base font-semibold mb-3">
+      <div className="ark-card p-3 md:p-4 flex flex-col min-h-0 flex-[3] md:flex-auto">
+        <h3 className="ark-section-title text-base font-semibold mb-3 shrink-0">
           <MapPinned className="w-5 h-5" />
           Meu Território
         </h3>
@@ -72,8 +72,8 @@ export default function PlacementView(p: PlacementViewProps) {
         </BoardGrid>
       </div>
 
-      <aside className="ark-card p-4 flex flex-col gap-3">
-        <h3 className="ark-section-title text-lg font-bold">
+      <aside className="ark-card p-4 flex flex-col gap-3 min-h-0 flex-1 md:flex-auto overflow-y-auto">
+        <h3 className="ark-section-title text-lg font-bold shrink-0">
           <Compass className="w-5 h-5" />
           Posicionamento
         </h3>
