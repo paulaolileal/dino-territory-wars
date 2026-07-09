@@ -26,6 +26,20 @@ const DINO_DAMAGE_URLS: Record<DinoKind, string> = {
   pteranodon: "/audio/dino-damage-sound/ptera-sound.mp3",
 };
 
+const DINO_SPAWN_URLS: Record<DinoKind, string> = {
+  rex: "/audio/dino-spawn-sound/rex-sound.mp3",
+  spino: "/audio/dino-spawn-sound/spino-sound.mp3",
+  mammoth: "/audio/dino-spawn-sound/mammoth-sound.mp3",
+  argentavis: "/audio/dino-spawn-sound/argentavis-sound.mp3",
+  direwolf: "/audio/dino-spawn-sound/wolf-sound.mp3",
+  therizinosaurus: "/audio/dino-spawn-sound/therizinosaurus-sound.mp3",
+  triceratops: "/audio/dino-spawn-sound/triceratops-sound.mp3",
+  ankylosaurus: "/audio/dino-spawn-sound/ankylo-sound.mp3",
+  carbonemys: "/audio/dino-spawn-sound/carbonemys-sound.mp3",
+  sarco: "/audio/dino-spawn-sound/sarco-sound.mp3",
+  pteranodon: "/audio/dino-spawn-sound/ptera-sound.mp3",
+};
+
 function playUrl(url: string, volume: number) {
   try {
     const a = new Audio(url);
@@ -45,4 +59,9 @@ export function play(key: SoundKey) {
 /** Plays the damage roar/impact sound for the given dino kind when it is hit. */
 export function playDinoDamage(kind: DinoKind) {
   playUrl(DINO_DAMAGE_URLS[kind], 0.5);
+}
+
+/** Plays the spawn/placement sound for the given dino kind when it is placed on the board. */
+export function playDinoSpawn(kind: DinoKind) {
+  playUrl(DINO_SPAWN_URLS[kind], 0.5);
 }

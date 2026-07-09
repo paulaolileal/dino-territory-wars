@@ -11,7 +11,7 @@ import {
   resolveAttack,
 } from "@/game/board";
 import { DINO_SPECS, type Coord, type NetMsg, type PlacedDino, type Rotation } from "@/game/types";
-import { play, playDinoDamage } from "@/game/sound";
+import { play, playDinoDamage, playDinoSpawn } from "@/game/sound";
 
 export type Phase =
   | "home"
@@ -206,7 +206,7 @@ export function useArkMatch() {
     };
     setMyDinos((d) => [...d, newDino]);
     setPlacingIdx((i) => i + 1);
-    play("click");
+    playDinoSpawn(currentSpec.kind);
   }
 
   const ROTATION_ORDER: Rotation[] = [0, 90, 180, 270];

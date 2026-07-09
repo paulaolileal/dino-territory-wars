@@ -62,7 +62,7 @@ export default function ArkGame() {
         className={
           match.phase === "home"
             ? "flex-1 flex items-center justify-center px-4 pb-16 md:px-8"
-            : "px-4 pb-16 md:px-8 max-w-[1600px] mx-auto"
+            : "px-4 pb-16 md:px-8"
         }
       >
         {match.phase === "home" && (
@@ -138,12 +138,12 @@ export default function ArkGame() {
         {match.phase === "lost-connection" && <LostConnection onBack={match.disconnect} />}
       </main>
 
-      <footer className="fixed inset-x-0 bottom-0 z-20 flex justify-center py-2 pointer-events-none">
+      <footer className="ark-footer fixed inset-x-0 bottom-0 z-20 flex justify-center py-2 pointer-events-none">
         <a
           href="https://lealtek.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="pointer-events-auto rounded bg-black/40 px-3 py-1 opacity-60 backdrop-blur-sm transition-opacity hover:opacity-90"
+          className="pointer-events-auto rounded px-3 py-1 opacity-60 transition-opacity hover:opacity-90"
           title="Desenvolvido por LealTEK"
         >
           <img

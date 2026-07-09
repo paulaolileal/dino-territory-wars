@@ -1,6 +1,9 @@
 import { Fragment, type ReactNode } from "react";
 import type { Coord } from "@/game/types";
-import { useSquareSize } from "@/hooks/use-square-size";
+
+// Matches the grid column cap in PlacementView/BattleView so the board's
+// 90% CSS sizing (see .ark-board) never grows past that track's own limit.
+export const BOARD_MAX_SIZE = 1200;
 
 interface BoardGridProps {
   size: number;
@@ -23,19 +26,14 @@ export default function BoardGrid({
   children,
 }: BoardGridProps) {
   const cols = Array.from({ length: size }, (_, i) => String.fromCharCode(65 + i));
-  // The wrapper is measured (plain, full-width, unsized) instead of the
-  // board itself so the available space keeps being read fresh from the
-  // layout instead of being fed back from the board's own pinned size.
-  const { ref, size: boardPx } = useSquareSize();
 
   return (
-    <div ref={ref} className="w-full">
+    <div className="w-full">
       <div
         className={`ark-board ${className ?? ""}`}
         style={{
           gridTemplateColumns: `24px repeat(${size}, minmax(0, 1fr))`,
           gridTemplateRows: `24px repeat(${size}, minmax(0, 1fr))`,
-          ...(boardPx ? { width: boardPx, height: boardPx } : undefined),
         }}
         onMouseLeave={onLeave}
       >

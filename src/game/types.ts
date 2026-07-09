@@ -133,9 +133,9 @@ export const DINO_SPECS: DinoSpec[] = [
     name: "Ankylosaurus",
     cells: [
       { row: 0, col: 0 },
+      { row: 0, col: 1 },
       { row: 1, col: 0 },
-      { row: 2, col: 0 },
-      { row: 2, col: 1 },
+      { row: 1, col: 1 },
     ],
     emoji: "🛡️",
     icon: "/assets/dino-icon/Ankylosaurus.webp",

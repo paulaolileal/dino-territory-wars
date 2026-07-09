@@ -4,6 +4,14 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: "Geist Pixel";
+  src: url("/fonts/GeistPixel-Regular.ttf") format("truetype-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 /*
  * Design system definition.
  *
@@ -141,11 +149,18 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family:
+      "Geist Pixel",
       system-ui,
       -apple-system,
       "Segoe UI",
       Roboto,
       sans-serif;
+    user-select: none;
+  }
+
+  input,
+  textarea {
+    user-select: text;
   }
 }
 
@@ -178,7 +193,7 @@
 }
 
 .ark-title {
-  font-family: "Georgia", "Times New Roman", serif;
+  font-family: "Geist Pixel", "Georgia", "Times New Roman", serif;
   letter-spacing: 0.06em;
   color: #e2c58a;
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
@@ -196,6 +211,12 @@
   z-index: 10;
   background: linear-gradient(180deg, rgba(10, 15, 10, 0.92), rgba(10, 15, 10, 0.8));
   border-bottom: 1px solid rgba(180, 150, 90, 0.18);
+  backdrop-filter: blur(6px);
+}
+
+.ark-footer {
+  background: linear-gradient(0deg, rgba(10, 15, 10, 0.92), rgba(10, 15, 10, 0.8));
+  border-top: 1px solid rgba(180, 150, 90, 0.18);
   backdrop-filter: blur(6px);
 }
 
@@ -374,21 +395,20 @@
   background: rgba(0, 0, 0, 0.4);
   border: 1px dashed rgba(226, 197, 138, 0.4);
   border-radius: 10px;
-  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-family: "Geist Pixel", ui-monospace, "SF Mono", Menlo, monospace;
   font-size: 0.95rem;
   word-break: break-all;
   color: #e2c58a;
 }
 
-/* Board grid: 1 label col + 10 cells. Width/height are set inline in
-   BoardGrid via useSquareSize once measured (largest square that fits the
-   real available width and remaining viewport height); aspect-ratio +
-   width:100% is just the pre-measurement fallback so there's no flash of
-   an unsized box. */
+/* Board grid: 1 label col + 10 cells. Sized at 90% of its wrapper so a
+   sliver of the card's background frames it; aspect-ratio keeps it square
+   off that width without needing to measure anything in JS. */
 .ark-board {
   position: relative;
   display: grid;
-  width: 100%;
+  width: 90%;
+  height: 90%;
   max-width: 100%;
   aspect-ratio: 1 / 1;
   grid-template-columns: 24px repeat(10, minmax(0, 1fr));

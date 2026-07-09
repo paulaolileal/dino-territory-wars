@@ -1,9 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, type CSSProperties } from "react";
 import { Compass, Eraser, MapPinned, PawPrint, RotateCw, Shuffle } from "lucide-react";
 import { DINO_SPECS, type Coord, type PlacedDino, type Rotation } from "@/game/types";
 import { key } from "@/game/board";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import BoardGrid from "./BoardGrid";
+import BoardGrid, { BOARD_MAX_SIZE } from "./BoardGrid";
 import DinoSprite from "./DinoSprite";
 
 interface PlacementViewProps {
@@ -50,7 +50,10 @@ export default function PlacementView(p: PlacementViewProps) {
   };
 
   return (
-    <div className="mt-4 grid md:grid-cols-[1fr_320px] gap-4">
+    <div
+      className="mt-4 grid gap-4 md:grid-cols-[minmax(0,var(--board-max))_320px] md:justify-center"
+      style={{ "--board-max": `${BOARD_MAX_SIZE}px` } as CSSProperties}
+    >
       <div className="ark-card p-3 md:p-4">
         <h3 className="ark-section-title text-base font-semibold mb-3">
           <MapPinned className="w-5 h-5" />
@@ -78,7 +81,8 @@ export default function PlacementView(p: PlacementViewProps) {
           <div className="text-sm flex items-center gap-2">
             <img src={current.icon} alt={current.name} className="w-8 h-8 object-contain invert" />
             <span>
-              Posicionando: <b>{current.name}</b> ({current.cells.length} casas) · Rotação: {p.rotation}°
+              Posicionando: <b>{current.name}</b> ({current.cells.length} casas) · Rotação:{" "}
+              {p.rotation}°
             </span>
           </div>
         )}

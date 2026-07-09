@@ -1,7 +1,8 @@
+import type { CSSProperties } from "react";
 import type { Coord, PlacedDino } from "@/game/types";
 import { key } from "@/game/board";
 import type { Phase, Shot } from "@/game/useArkMatch";
-import BoardGrid from "./BoardGrid";
+import BoardGrid, { BOARD_MAX_SIZE } from "./BoardGrid";
 import DinoSprite from "./DinoSprite";
 import GridOverlayItem from "./GridOverlayItem";
 
@@ -36,7 +37,10 @@ function ShotMarkers({ map }: { map: Map<string, Shot> }) {
 
 export default function BattleView(p: BattleViewProps) {
   return (
-    <div className="mt-4 grid md:grid-cols-2 gap-4">
+    <div
+      className="mt-4 grid gap-4 md:grid-cols-[repeat(2,minmax(0,var(--board-max)))] md:justify-center"
+      style={{ "--board-max": `${BOARD_MAX_SIZE}px` } as CSSProperties}
+    >
       <div className={`ark-card p-3 md:p-4 ${p.phase === "their-turn" ? "ark-active" : ""}`}>
         <h3 className="ark-muted text-sm font-semibold mb-2 flex items-center justify-between">
           <span>Meu território</span>
