@@ -1,8 +1,8 @@
-# ARK: Territory Wars
+![ARK: Territory Wars](docs/images/ark-banner.png)
 
 Batalha de tribos com dinossauros — um jogo de tabuleiro estilo "batalha naval" com tema de ARK: Survival Evolved. Posicione suas criaturas no grid, conecte-se com um amigo via P2P e ataque o território inimigo até destruir todas as criaturas dele.
 
-> Projeto pessoal feito por hobby, sem fins comerciais e sem vínculo com a Studio Wildcard/ARK: Survival Evolved. Os assets de imagem usados são apenas para fins de fã e ambientação.
+> Projeto de fã, sem fins lucrativos e sem nenhum vínculo com a Studio Wildcard/ARK: Survival Evolved. Feito por inspiração de quem ama o jogo — os assets de imagem usados são apenas para fins de fã e ambientação.
 
 ![Tela de criação de partida](docs/images/ark-criar-partida.png)
 

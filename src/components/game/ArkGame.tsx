@@ -71,12 +71,23 @@ export default function ArkGame() {
         }
       >
         {match.phase === "home" && (
-          <HomeScreen
-            onCreate={handleCreate}
-            joinCode={match.joinCode}
-            onJoinCodeChange={match.setJoinCode}
-            onJoin={handleJoin}
-          />
+          <div className="w-full flex flex-col items-center gap-6">
+            <img
+              src="/assets/branding/ark-banner.png"
+              alt="ARK: Territory Wars"
+              className="w-full max-w-2xl px-4"
+            />
+            <p className="ark-muted text-xs text-center max-w-md px-4">
+              Projeto de fã, sem fins lucrativos e sem nenhum vínculo com a Studio Wildcard —
+              feito por inspiração de quem ama ARK: Survival Evolved.
+            </p>
+            <HomeScreen
+              onCreate={handleCreate}
+              joinCode={match.joinCode}
+              onJoinCodeChange={match.setJoinCode}
+              onJoin={handleJoin}
+            />
+          </div>
         )}
 
         {match.phase === "waiting" && (
