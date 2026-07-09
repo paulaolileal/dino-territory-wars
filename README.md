@@ -41,9 +41,13 @@ Posicione cada criatura no seu território, com opção de rotacionar, posiciona
 
 ![Posicionamento das criaturas no grid](docs/images/ark-grid.png)
 
+![Todas as criaturas posicionadas](docs/images/ark-posicionamento-dinossauros.png)
+
 ### Batalhar
 
 Os jogadores se revezam atacando o território um do outro até que todas as criaturas de um dos lados sejam abatidas.
+
+![Batalha em andamento](docs/images/ark-combate.png)
 
 ![Tela de vitória](docs/images/ark-vitoria.png)
 
