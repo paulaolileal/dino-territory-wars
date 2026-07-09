@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { Flame, X } from "lucide-react";
 import type { Coord, PlacedDino } from "@/game/types";
 import { key } from "@/game/board";
 import type { Phase, Shot } from "@/game/useArkMatch";
@@ -27,8 +28,8 @@ function ShotMarkers({ map }: { map: Map<string, Shot> }) {
           className="ark-shot-marker"
         >
           {s.result === "miss" && <span className="ark-miss">•</span>}
-          {s.result === "hit" && <span className="ark-hit">✕</span>}
-          {s.result === "sunk" && <span className="ark-sunk">💥</span>}
+          {s.result === "hit" && <X className="ark-hit w-4 h-4" />}
+          {s.result === "sunk" && <Flame className="ark-sunk w-5 h-5 text-red-500" />}
         </GridOverlayItem>
       ))}
     </>

@@ -21,7 +21,6 @@ export interface DinoSpec {
   name: string;
   /** Footprint at rotation 0, offsets from (0,0), normalized so min row/col = 0. */
   cells: Coord[];
-  emoji: string;
   /** Icon shown in the placement UI. */
   icon: string;
   color: string;
@@ -40,7 +39,6 @@ export const DINO_SPECS: DinoSpec[] = [
       { row: 3, col: 0 },
       { row: 4, col: 0 },
     ],
-    emoji: "🦖",
     icon: "/assets/dino-icon/Rex.webp",
     color: "#8b3a2e",
     sprite: "/assets/dinos/rex.png",
@@ -54,7 +52,6 @@ export const DINO_SPECS: DinoSpec[] = [
       { row: 2, col: 0 },
       { row: 3, col: 0 },
     ],
-    emoji: "🐊",
     icon: "/assets/dino-icon/Spino.webp",
     color: "#3a6b4a",
     sprite: "/assets/dinos/spino.png",
@@ -70,7 +67,6 @@ export const DINO_SPECS: DinoSpec[] = [
       { row: 2, col: 0 },
       { row: 2, col: 1 },
     ],
-    emoji: "🦣",
     icon: "/assets/dino-icon/Mammoth.webp",
     color: "#6b4a2e",
     sprite: "/assets/dinos/mammoth.png",
@@ -84,7 +80,6 @@ export const DINO_SPECS: DinoSpec[] = [
       { row: 1, col: 1 },
       { row: 1, col: 2 },
     ],
-    emoji: "🦅",
     icon: "/assets/dino-icon/Argentavis.webp",
     color: "#5a4030",
     sprite: "/assets/dinos/argentavis.png",
@@ -96,7 +91,6 @@ export const DINO_SPECS: DinoSpec[] = [
       { row: 0, col: 0 },
       { row: 1, col: 0 },
     ],
-    emoji: "🐺",
     icon: "/assets/dino-icon/Direwolf.webp",
     color: "#4a4a4a",
     sprite: "/assets/dinos/direwolf.png",
@@ -109,7 +103,6 @@ export const DINO_SPECS: DinoSpec[] = [
       { row: 1, col: 0 },
       { row: 2, col: 0 },
     ],
-    emoji: "🦥",
     icon: "/assets/dino-icon/Therizinosaur.webp",
     color: "#5c7a3a",
     sprite: "/assets/dinos/therizinosaurus.png",
@@ -123,7 +116,6 @@ export const DINO_SPECS: DinoSpec[] = [
       { row: 1, col: 0 },
       { row: 1, col: 1 },
     ],
-    emoji: "🦏",
     icon: "/assets/dino-icon/Trike.webp",
     color: "#7a5a3a",
     sprite: "/assets/dinos/triceratops.png",
@@ -137,7 +129,6 @@ export const DINO_SPECS: DinoSpec[] = [
       { row: 1, col: 0 },
       { row: 1, col: 1 },
     ],
-    emoji: "🛡️",
     icon: "/assets/dino-icon/Ankylosaurus.webp",
     color: "#4a5a3a",
     sprite: "/assets/dinos/ankylosaurus.png",
@@ -151,7 +142,6 @@ export const DINO_SPECS: DinoSpec[] = [
       { row: 1, col: 0 },
       { row: 1, col: 1 },
     ],
-    emoji: "🐢",
     icon: "/assets/dino-icon/Carbonemys.webp",
     color: "#2e5a4a",
     sprite: "/assets/dinos/carbonemys.png",
@@ -164,7 +154,6 @@ export const DINO_SPECS: DinoSpec[] = [
       { row: 1, col: 0 },
       { row: 2, col: 0 },
     ],
-    emoji: "🐊",
     icon: "/assets/dino-icon/Sarco.webp",
     color: "#3a5a6b",
     sprite: "/assets/dinos/sarco.png",
@@ -176,7 +165,6 @@ export const DINO_SPECS: DinoSpec[] = [
       { row: 0, col: 0 },
       { row: 0, col: 1 },
     ],
-    emoji: "🦇",
     icon: "/assets/dino-icon/Pteranodon.webp",
     color: "#8a6a4a",
     sprite: "/assets/dinos/pteranodon.png",

@@ -10,7 +10,7 @@ const MENU_PHASES = new Set<Phase>([
   "placement",
   "waiting-opponent",
 ]);
-const BATTLE_PHASES = new Set<Phase>(["my-turn", "their-turn", "victory", "defeat"]);
+const BATTLE_PHASES = new Set<Phase>(["my-turn", "their-turn"]);
 
 function trackForPhase(phase: Phase): MusicTrack {
   if (MENU_PHASES.has(phase)) return "menu";

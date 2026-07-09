@@ -1,5 +1,5 @@
 import { useEffect, type CSSProperties } from "react";
-import { Compass, Eraser, MapPinned, PawPrint, RotateCw, Shuffle } from "lucide-react";
+import { Check, Compass, Eraser, MapPinned, PawPrint, RotateCw, Shuffle } from "lucide-react";
 import { DINO_SPECS, type Coord, type PlacedDino, type Rotation } from "@/game/types";
 import { key } from "@/game/board";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -152,8 +152,9 @@ export default function PlacementView(p: PlacementViewProps) {
                   <img src={s.icon} alt={s.name} className="w-8 h-8 object-contain invert" />
                   {s.name}
                 </span>
-                <span className="ark-muted text-sm">
-                  {s.cells.length} casas {i < p.placingIdx ? "✓" : ""}
+                <span className="ark-muted text-sm flex items-center gap-1">
+                  {s.cells.length} casas
+                  {i < p.placingIdx && <Check className="w-3.5 h-3.5 text-emerald-400" />}
                 </span>
               </li>
             ))}

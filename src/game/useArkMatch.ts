@@ -53,12 +53,20 @@ export function useArkMatch() {
   const [myShotsFired, setMyShotsFired] = useState<Shot[]>([]); // on enemy board
   const [readyBoth, setReadyBoth] = useState({ me: false, them: false });
   const [enemyRevealed, setEnemyRevealed] = useState<PlacedDino[]>([]);
+  const [matchDurationMs, setMatchDurationMs] = useState<number | null>(null);
 
   const peerRef = useRef<PeerService | null>(null);
   const myDinosRef = useRef<PlacedDino[]>([]);
   useEffect(() => {
     myDinosRef.current = myDinos;
   }, [myDinos]);
+
+  // Ref (not state) because both peers must read the exact start instant inside
+  // handleMessage's closure the moment the match ends, without waiting for a re-render.
+  const matchStartedAtRef = useRef<number | null>(null);
+  function markMatchStart() {
+    matchStartedAtRef.current = Date.now();
+  }
 
   useEffect(() => {
     return () => peerRef.current?.destroy();
@@ -95,6 +103,7 @@ export function useArkMatch() {
     } else if (msg.type === "start") {
       const first = msg.firstPeer;
       const mine = peerRef.current?.peerId();
+      markMatchStart();
       setPhase(first === mine ? "my-turn" : "their-turn");
     } else if (msg.type === "attack") {
       const dinos = myDinosRef.current.map((d) => ({ ...d, hits: [...d.hits] }));
@@ -116,6 +125,9 @@ export function useArkMatch() {
       }
       if (res.gameOver) {
         play("lose");
+        setMatchDurationMs(
+          matchStartedAtRef.current ? Date.now() - matchStartedAtRef.current : null,
+        );
         setPhase("defeat");
       } else {
         setPhase("my-turn");
@@ -132,6 +144,9 @@ export function useArkMatch() {
       }
       if (msg.gameOver) {
         play("win");
+        setMatchDurationMs(
+          matchStartedAtRef.current ? Date.now() - matchStartedAtRef.current : null,
+        );
         setPhase("victory");
       } else {
         setPhase("their-turn");
@@ -183,6 +198,8 @@ export function useArkMatch() {
     setMyShotsFired([]);
     setReadyBoth({ me: false, them: false });
     setEnemyRevealed([]);
+    setMatchDurationMs(null);
+    matchStartedAtRef.current = null;
   }
 
   function restart() {
@@ -248,6 +265,7 @@ export function useArkMatch() {
         const ids = [myPeerId, getConnRemoteId(peerRef.current!) ?? ""];
         const first = ids[Math.floor(Math.random() * 2)];
         peerRef.current?.send({ type: "start", firstPeer: first });
+        markMatchStart();
         setPhase(first === myPeerId ? "my-turn" : "their-turn");
       }
     }
@@ -307,6 +325,7 @@ export function useArkMatch() {
     rotation,
     currentSpec,
     enemyRevealed,
+    matchDurationMs,
 
     myShotsReceived,
     myShotsFired,

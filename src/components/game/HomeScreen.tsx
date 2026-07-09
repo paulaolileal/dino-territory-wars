@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Camera } from "lucide-react";
+import { Camera, Swords, Tent } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BOARD_SIZE_OPTIONS, DEFAULT_BOARD_SIZE } from "@/game/board";
 import QrScanDialog from "./QrScanDialog";
@@ -36,10 +36,12 @@ export default function HomeScreen({
       <Tabs defaultValue="create">
         <TabsList className="ark-tabs-list">
           <TabsTrigger value="create" className="ark-tabs-trigger">
-            🏕️ Criar
+            <Tent className="w-4 h-4 inline-block mr-1.5" />
+            Criar
           </TabsTrigger>
           <TabsTrigger value="join" className="ark-tabs-trigger">
-            ⚔️ Entrar
+            <Swords className="w-4 h-4 inline-block mr-1.5" />
+            Entrar
           </TabsTrigger>
         </TabsList>
 

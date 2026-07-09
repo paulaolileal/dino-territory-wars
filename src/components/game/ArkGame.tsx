@@ -4,7 +4,7 @@ import { useBackgroundMusic } from "@/hooks/use-background-music";
 import MusicToggle from "./MusicToggle";
 import HomeScreen from "./HomeScreen";
 import { ConnectingStatus, LostConnection, WaitingRoom } from "./LobbyScreens";
-import ResultBanner from "./ResultBanner";
+import ResultScreen from "./ResultScreen";
 
 const PlacementView = lazy(() => import("./PlacementView"));
 const BattleView = lazy(() => import("./BattleView"));
@@ -110,10 +110,7 @@ export default function ArkGame() {
           </Suspense>
         )}
 
-        {(match.phase === "my-turn" ||
-          match.phase === "their-turn" ||
-          match.phase === "victory" ||
-          match.phase === "defeat") && (
+        {(match.phase === "my-turn" || match.phase === "their-turn") && (
           <Suspense fallback={null}>
             <BattleView
               phase={match.phase}
@@ -128,8 +125,11 @@ export default function ArkGame() {
         )}
 
         {(match.phase === "victory" || match.phase === "defeat") && (
-          <ResultBanner
+          <ResultScreen
             victory={match.phase === "victory"}
+            matchDurationMs={match.matchDurationMs}
+            myShotsFired={match.myShotsFired}
+            enemyRevealed={match.enemyRevealed}
             onRestart={match.restart}
             onDisconnect={match.disconnect}
           />

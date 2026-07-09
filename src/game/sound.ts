@@ -8,8 +8,8 @@ const URLS: Record<SoundKey, string | null> = {
   click: null,
   hit: null,
   miss: null,
-  win: null,
-  lose: null,
+  win: "/audio/victory-sound.mp3",
+  lose: "/audio/lose-sound.mp3",
 };
 
 const DINO_DAMAGE_URLS: Record<DinoKind, string> = {

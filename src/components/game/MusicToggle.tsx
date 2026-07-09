@@ -1,3 +1,5 @@
+import { Volume2, VolumeX } from "lucide-react";
+
 interface MusicToggleProps {
   muted: boolean;
   onToggle: () => void;
@@ -19,7 +21,8 @@ export default function MusicToggle({
     <div className="flex items-center gap-2">
       {blocked && (
         <button onClick={onUnlock} className="ark-btn-secondary text-xs animate-pulse" type="button">
-          🔈 Ativar música
+          <Volume2 className="w-4 h-4 inline-block mr-1.5" />
+          Ativar música
         </button>
       )}
       <button
@@ -29,7 +32,7 @@ export default function MusicToggle({
         aria-label={muted ? "Ativar música" : "Silenciar música"}
         title={muted ? "Ativar música" : "Silenciar música"}
       >
-        {muted || blocked ? "🔇" : "🔊"}
+        {muted || blocked ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
       </button>
       <input
         type="range"

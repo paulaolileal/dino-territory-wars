@@ -550,6 +550,73 @@
   }
 }
 
+/* ---------- Result screen (victory/defeat) ---------- */
+.ark-victory-card {
+  border-color: rgba(226, 197, 138, 0.45);
+}
+
+.ark-victory-glow {
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(226, 197, 138, 0.35) 0%, rgba(226, 197, 138, 0) 70%);
+  animation: arkVictoryGlow 2.4s ease-in-out infinite;
+}
+
+@keyframes arkVictoryGlow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+.ark-victory-icon {
+  animation:
+    arkPop 0.5s ease-out,
+    arkVictoryBounce 1.6s ease-in-out 0.5s infinite;
+}
+
+@keyframes arkVictoryBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.ark-defeat-card {
+  border-color: rgba(120, 40, 40, 0.35);
+}
+
+/* Fixed so it covers the whole viewport (header/footer included), dimming
+   everything behind the result modal, which stacks above it via z-30. */
+.ark-defeat-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 25;
+  pointer-events: none;
+  background: #05070a;
+  opacity: 0;
+  animation: arkDefeatOverlay 3s ease-in forwards;
+}
+
+@keyframes arkDefeatOverlay {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.94;
+  }
+}
+
 @media (max-width: 640px) {
   .ark-board {
     grid-template-columns: 18px repeat(10, minmax(0, 1fr));
