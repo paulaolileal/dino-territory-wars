@@ -12,4 +12,6 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  // Without this, nitro defaults to a Cloudflare Worker build, which Vercel can't run.
+  nitro: process.env.VERCEL ? { preset: "vercel" } : undefined,
 });
