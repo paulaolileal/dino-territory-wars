@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { DEFAULT_MUSIC_VOLUME, musicService, type MusicTrack } from "@/game/music";
+import { setSoundMuted, setSoundVolume } from "@/game/sound";
 import type { Phase } from "@/game/useArkMatch";
 
 const MENU_PHASES = new Set<Phase>([
@@ -36,11 +37,13 @@ export function useBackgroundMusic(phase: Phase) {
 
   useEffect(() => {
     musicService.setMuted(muted);
+    setSoundMuted(muted);
     window.localStorage.setItem(MUTE_KEY, muted ? "1" : "0");
   }, [muted]);
 
   useEffect(() => {
     musicService.setVolume(volume);
+    setSoundVolume(volume);
     window.localStorage.setItem(VOLUME_KEY, String(volume));
   }, [volume]);
 

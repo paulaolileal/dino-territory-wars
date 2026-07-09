@@ -29,8 +29,8 @@ export default function MusicToggle({
         onClick={onToggle}
         className="ark-btn-ghost"
         type="button"
-        aria-label={muted ? "Ativar música" : "Silenciar música"}
-        title={muted ? "Ativar música" : "Silenciar música"}
+        aria-label={muted ? "Ativar sons" : "Silenciar sons"}
+        title={muted ? "Ativar sons" : "Silenciar sons"}
       >
         {muted || blocked ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
       </button>
@@ -43,8 +43,8 @@ export default function MusicToggle({
         onChange={(e) => onVolumeChange(Number(e.target.value))}
         disabled={muted}
         className="ark-volume-slider"
-        aria-label="Volume da música"
-        title="Volume da música"
+        aria-label="Volume dos sons"
+        title="Volume dos sons"
       />
     </div>
   );

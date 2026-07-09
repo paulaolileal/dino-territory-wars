@@ -40,10 +40,24 @@ const DINO_SPAWN_URLS: Record<DinoKind, string> = {
   pteranodon: "/audio/dino-spawn-sound/ptera-sound.mp3",
 };
 
-function playUrl(url: string, volume: number) {
+// Shared master volume/mute, kept in sync with the background music controls
+// so a single volume slider governs every sound effect in the game as well.
+let masterVolume = 1;
+let muted = false;
+
+export function setSoundVolume(volume: number) {
+  masterVolume = volume;
+}
+
+export function setSoundMuted(value: boolean) {
+  muted = value;
+}
+
+function playUrl(url: string, relativeVolume: number) {
+  if (muted || masterVolume <= 0) return;
   try {
     const a = new Audio(url);
-    a.volume = volume;
+    a.volume = Math.min(1, Math.max(0, relativeVolume * masterVolume));
     void a.play();
   } catch {
     /* ignore */
