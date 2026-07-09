@@ -137,6 +137,15 @@ export default function PlacementView(p: PlacementViewProps) {
           </div>
         </TooltipProvider>
 
+        <button
+          onClick={p.onConfirm}
+          disabled={!done || p.confirmed}
+          className="ark-btn-primary"
+          type="button"
+        >
+          {p.confirmed ? (p.themReady ? "Aguardando..." : "Aguardando adversário...") : "Confirmar"}
+        </button>
+
         <div className="mt-2 border-t border-white/10 pt-3">
           <h4 className="ark-section-title text-sm font-semibold mb-2">
             <PawPrint className="w-4 h-4" />
@@ -160,15 +169,6 @@ export default function PlacementView(p: PlacementViewProps) {
             ))}
           </ul>
         </div>
-
-        <button
-          onClick={p.onConfirm}
-          disabled={!done || p.confirmed}
-          className="ark-btn-primary mt-auto"
-          type="button"
-        >
-          {p.confirmed ? (p.themReady ? "Aguardando..." : "Aguardando adversário...") : "Confirmar"}
-        </button>
       </aside>
     </div>
   );

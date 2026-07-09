@@ -46,7 +46,9 @@ export default function BattleView(p: BattleViewProps) {
         <h3 className="ark-muted text-sm font-semibold mb-2 flex items-center justify-between">
           <span>Meu território</span>
           {p.phase === "their-turn" && (
-            <span className="text-xs text-amber-300 animate-pulse">sob ataque</span>
+            <span className="text-sm md:text-base font-extrabold uppercase tracking-wide text-amber-300 animate-pulse drop-shadow-[0_0_6px_rgba(252,211,77,0.6)]">
+              Sob ataque
+            </span>
           )}
         </h3>
         <BoardGrid size={p.boardSize}>
@@ -65,7 +67,9 @@ export default function BattleView(p: BattleViewProps) {
         <h3 className="ark-muted text-sm font-semibold mb-2 flex items-center justify-between">
           <span>Território inimigo</span>
           {p.phase === "my-turn" && (
-            <span className="text-xs text-emerald-300 animate-pulse">seu turno</span>
+            <span className="text-sm md:text-base font-extrabold uppercase tracking-wide text-emerald-300 animate-pulse drop-shadow-[0_0_6px_rgba(52,211,153,0.6)]">
+              Seu turno
+            </span>
           )}
         </h3>
         <BoardGrid
