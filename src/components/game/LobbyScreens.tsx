@@ -18,8 +18,8 @@ export function WaitingRoom({ code, copyOk, onCopy, onCancel }: WaitingRoomProps
     <div className="ark-card p-6 mt-6 max-w-lg mx-auto text-center flex flex-col gap-4">
       <h2 className="text-lg font-bold">Seu código de sala</h2>
       {code && (
-        <div className="mx-auto rounded-lg bg-white p-3">
-          <QRCodeSVG value={code} size={180} bgColor="#ffffff" fgColor="#000000" />
+        <div className="mx-auto rounded-lg p-3 ark-qr-frame">
+          <QRCodeSVG value={code} size={180} bgColor="#f2e6cc" fgColor="#2b2116" />
         </div>
       )}
       <div className="ark-code select-all">{code || "..."}</div>

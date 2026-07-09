@@ -9,11 +9,13 @@ interface QrScanDialogProps {
 }
 
 export default function QrScanDialog({ open, onOpenChange, onScan }: QrScanDialogProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoEl, setVideoEl] = useState<HTMLVideoElement | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const onScanRef = useRef(onScan);
+  onScanRef.current = onScan;
 
   useEffect(() => {
-    if (!open || !videoRef.current) return;
+    if (!open || !videoEl) return;
 
     setError(null);
 
@@ -24,7 +26,7 @@ export default function QrScanDialog({ open, onOpenChange, onScan }: QrScanDialo
 
     let scanner: QrScanner | null = null;
     try {
-      scanner = new QrScanner(videoRef.current, (result) => onScan(result.data), {
+      scanner = new QrScanner(videoEl, (result) => onScanRef.current(result.data), {
         highlightScanRegion: true,
         highlightCodeOutline: true,
       });
@@ -38,19 +40,18 @@ export default function QrScanDialog({ open, onOpenChange, onScan }: QrScanDialo
     }
 
     return () => scanner?.destroy();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+  }, [open, videoEl]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="ark-card border-none text-[#e8ead8]">
         <DialogHeader>
-          <DialogTitle>Escanear código da sala</DialogTitle>
+          <DialogTitle className="ark-section-title">Escanear código da sala</DialogTitle>
         </DialogHeader>
         {error ? (
           <p className="ark-muted text-sm">{error}</p>
         ) : (
-          <video ref={videoRef} className="w-full rounded-lg" muted playsInline />
+          <video ref={setVideoEl} className="w-full rounded-lg" muted playsInline />
         )}
       </DialogContent>
     </Dialog>

@@ -390,6 +390,11 @@
   box-shadow: 0 0 0 3px rgba(110, 162, 61, 0.25);
 }
 
+.ark-qr-frame {
+  background: #f2e6cc;
+  border: 1px solid rgba(226, 197, 138, 0.4);
+}
+
 .ark-code {
   padding: 0.8rem 1rem;
   background: rgba(0, 0, 0, 0.4);
