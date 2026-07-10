@@ -9,6 +9,7 @@ interface HomeScreenProps {
   joinCode: string;
   onJoinCodeChange: (value: string) => void;
   onJoin: () => void;
+  errorMessage?: string;
 }
 
 export default function HomeScreen({
@@ -16,6 +17,7 @@ export default function HomeScreen({
   joinCode,
   onJoinCodeChange,
   onJoin,
+  errorMessage,
 }: HomeScreenProps) {
   const [boardSize, setBoardSize] = useState<number>(DEFAULT_BOARD_SIZE);
   const [scanOpen, setScanOpen] = useState(false);
@@ -32,6 +34,12 @@ export default function HomeScreen({
         <h2 className="ark-section-title text-lg font-bold">Bem-vindo, treinador</h2>
         <p className="ark-muted text-sm">Crie uma partida ou entre em uma já existente.</p>
       </div>
+
+      {errorMessage && (
+        <p className="text-destructive text-sm text-center" role="alert">
+          {errorMessage}
+        </p>
+      )}
 
       <Tabs defaultValue="create">
         <TabsList className="ark-tabs-list">

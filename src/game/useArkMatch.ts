@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { PeerService } from "@/game/peer";
+import { describePeerError, PeerService } from "@/game/peer";
 import {
   DEFAULT_BOARD_SIZE,
   canPlace,
@@ -75,11 +75,13 @@ export function useArkMatch() {
   function initPeer(onOpen: (id: string) => void, hostBoardSize?: number) {
     const p = new PeerService();
     peerRef.current = p;
+    let connected = false;
     p.onOpen = (id) => {
       setMyPeerId(id);
       onOpen(id);
     };
     p.onConnected = () => {
+      connected = true;
       setStatus("Conectado");
       if (hostBoardSize) {
         peerRef.current?.send({ type: "hello", boardSize: hostBoardSize });
@@ -90,7 +92,15 @@ export function useArkMatch() {
     p.onDisconnect = () => setPhase("lost-connection");
     p.onError = (e) => {
       console.error(e);
-      setStatus("Erro de conexão");
+      setStatus(describePeerError(e));
+      // A connection that never opened can't recover on its own (e.g. the
+      // room code is stale) — send the player back to retry instead of
+      // leaving them stuck on the "connecting" animation forever.
+      if (!connected) {
+        peerRef.current?.destroy();
+        peerRef.current = null;
+        setPhase("home");
+      }
     };
     p.init();
   }
@@ -198,6 +208,7 @@ export function useArkMatch() {
     peerRef.current?.destroy();
     peerRef.current = null;
     resetLocal();
+    setStatus("");
     setPhase("home");
   }
 

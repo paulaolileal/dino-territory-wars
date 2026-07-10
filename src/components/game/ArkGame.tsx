@@ -80,6 +80,7 @@ export default function ArkGame() {
               joinCode={match.joinCode}
               onJoinCodeChange={match.setJoinCode}
               onJoin={handleJoin}
+              errorMessage={match.status || undefined}
             />
             <p className="ark-card text-xs text-center max-w-md mx-4 px-4 py-2 text-white/90">
               Projeto de fã, sem fins lucrativos e sem nenhum vínculo com a Studio Wildcard — feito

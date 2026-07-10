@@ -1,5 +1,19 @@
-import Peer, { type DataConnection } from "peerjs";
+import Peer, { type DataConnection, type PeerError, type PeerErrorType } from "peerjs";
 import type { NetMsg } from "./types";
+
+const PEER_ERROR_MESSAGES: Partial<Record<PeerErrorType, string>> = {
+  "peer-unavailable": "Sala não encontrada. O código pode ter expirado ou está incorreto.",
+  network: "Falha de rede ao conectar. Verifique sua internet e tente novamente.",
+  "server-error": "Servidor de conexão indisponível no momento. Tente novamente em instantes.",
+  disconnected: "Conexão com o servidor perdida. Tente novamente.",
+  "socket-error": "Falha de rede ao conectar. Verifique sua internet e tente novamente.",
+  "socket-closed": "Conexão com o servidor perdida. Tente novamente.",
+};
+
+export function describePeerError(err: unknown): string {
+  const type = (err as Partial<PeerError<PeerErrorType>> | undefined)?.type;
+  return (type && PEER_ERROR_MESSAGES[type]) || "Erro de conexão. Tente novamente.";
+}
 
 export class PeerService {
   private peer: Peer | null = null;
