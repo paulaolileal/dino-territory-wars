@@ -1,4 +1,4 @@
-import { Fragment, type ReactNode } from "react";
+import { Fragment, useRef, type ReactNode, type TouchEvent as ReactTouchEvent } from "react";
 import type { Coord } from "@/game/types";
 
 // Matches the grid column cap in PlacementView/BattleView so the board's
@@ -27,6 +27,65 @@ export default function BoardGrid({
 }: BoardGridProps) {
   const cols = Array.from({ length: size }, (_, i) => String.fromCharCode(65 + i));
 
+  // Touch devices have no hover, so press-and-drag emulates it: touchstart
+  // previews the cell under the finger, touchmove updates it as the finger
+  // moves, and touchend commits the placement/click on the last cell hovered.
+  const draggingRef = useRef(false);
+  const lastCellRef = useRef<Coord | null>(null);
+
+  function cellFromPoint(x: number, y: number): Coord | null {
+    const target = document.elementFromPoint(x, y);
+    const wrap = target?.closest<HTMLElement>("[data-row]");
+    if (!wrap) return null;
+    const row = Number(wrap.dataset.row);
+    const col = Number(wrap.dataset.col);
+    if (Number.isNaN(row) || Number.isNaN(col)) return null;
+    return { row, col };
+  }
+
+  function handleTouchStart(e: ReactTouchEvent<HTMLDivElement>) {
+    const touch = e.touches[0];
+    if (!touch) return;
+    const cell = cellFromPoint(touch.clientX, touch.clientY);
+    if (!cell) return;
+    draggingRef.current = true;
+    lastCellRef.current = cell;
+    onEnter?.(cell);
+  }
+
+  function handleTouchMove(e: ReactTouchEvent<HTMLDivElement>) {
+    if (!draggingRef.current) return;
+    const touch = e.touches[0];
+    if (!touch) return;
+    const cell = cellFromPoint(touch.clientX, touch.clientY);
+    const last = lastCellRef.current;
+    if (cell) {
+      if (!last || last.row !== cell.row || last.col !== cell.col) {
+        lastCellRef.current = cell;
+        onEnter?.(cell);
+      }
+    } else if (last) {
+      lastCellRef.current = null;
+      onLeave?.();
+    }
+  }
+
+  function handleTouchEnd(e: ReactTouchEvent<HTMLDivElement>) {
+    if (!draggingRef.current) return;
+    draggingRef.current = false;
+    e.preventDefault();
+    const cell = lastCellRef.current;
+    lastCellRef.current = null;
+    if (cell) onClick?.(cell.row, cell.col);
+    onLeave?.();
+  }
+
+  function handleTouchCancel() {
+    draggingRef.current = false;
+    lastCellRef.current = null;
+    onLeave?.();
+  }
+
   return (
     <div className="ark-board-frame">
       <div
@@ -36,6 +95,10 @@ export default function BoardGrid({
           gridTemplateRows: `24px repeat(${size}, minmax(0, 1fr))`,
         }}
         onMouseLeave={onLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchCancel}
       >
         <div className="ark-corner" style={{ gridColumn: 1, gridRow: 1 }} />
         {cols.map((c, col) => (
@@ -51,6 +114,8 @@ export default function BoardGrid({
             {Array.from({ length: size }).map((_, col) => (
               <button
                 key={`${row}-${col}`}
+                data-row={row}
+                data-col={col}
                 onMouseEnter={() => onEnter?.({ row, col })}
                 onClick={() => onClick?.(row, col)}
                 className="ark-cell-wrap"

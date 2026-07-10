@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import { useArkMatch, type Phase } from "@/game/useArkMatch";
-import { useBackgroundMusic } from "@/hooks/use-background-music";
-import MusicToggle from "./MusicToggle";
+import { useAudioMixer } from "@/hooks/use-audio-mixer";
+import VolumeMixer from "./VolumeMixer";
 import HomeScreen from "./HomeScreen";
 import { ConnectingStatus, LostConnection, WaitingRoom } from "./LobbyScreens";
 import ResultScreen from "./ResultScreen";
@@ -13,39 +13,37 @@ const BOARD_PHASES: Phase[] = ["placement", "waiting-opponent", "my-turn", "thei
 
 export default function ArkGame() {
   const match = useArkMatch();
-  const music = useBackgroundMusic(match.phase);
+  const mixer = useAudioMixer(match.phase);
   const isBoardPhase = BOARD_PHASES.includes(match.phase);
 
   function handleCreate(size: number) {
-    music.unlock();
+    mixer.unlock();
     match.createMatch(size);
   }
 
   function handleJoin() {
-    music.unlock();
+    mixer.unlock();
     match.doJoin();
   }
 
   return (
     <div className="h-dvh ark-bg text-foreground flex flex-col overflow-hidden">
-      <header className="ark-header shrink-0 px-4 py-4 md:px-8 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      <header className="ark-header shrink-0 px-3 py-1.5 md:px-8 md:py-4 flex items-center justify-between">
+        <div className="flex items-center gap-2 md:gap-3">
           <img src="/assets/branding/ark-logo.png" alt="ARK" className="ark-logo-img" />
           <div>
-            <h1 className="text-xl md:text-2xl font-bold tracking-wide ark-title">
+            <h1 className="text-sm md:text-2xl font-bold tracking-wide ark-title">
               ARK: Territory Wars
             </h1>
-            <p className="ark-muted text-xs">Batalha de tribos com dinossauros</p>
+            <p className="ark-muted text-xs hidden md:block">Batalha de tribos com dinossauros</p>
           </div>
         </div>
-        <div className="flex items-center gap-3 text-xs">
-          <MusicToggle
-            muted={music.muted}
-            onToggle={music.toggleMuted}
-            volume={music.volume}
-            onVolumeChange={music.setVolume}
-            blocked={music.blocked}
-            onUnlock={music.unlock}
+        <div className="flex items-center gap-2 md:gap-3 text-xs">
+          <VolumeMixer
+            music={mixer.music}
+            effects={mixer.effects}
+            blocked={mixer.blocked}
+            onUnlock={mixer.unlock}
           />
           {match.phase !== "home" && (
             <div className="flex items-center gap-2">
@@ -84,8 +82,8 @@ export default function ArkGame() {
               onJoin={handleJoin}
             />
             <p className="ark-card text-xs text-center max-w-md mx-4 px-4 py-2 text-white/90">
-              Projeto de fã, sem fins lucrativos e sem nenhum vínculo com a Studio Wildcard —
-              feito por inspiração de quem ama ARK: Survival Evolved.
+              Projeto de fã, sem fins lucrativos e sem nenhum vínculo com a Studio Wildcard — feito
+              por inspiração de quem ama ARK: Survival Evolved.
             </p>
           </div>
         )}

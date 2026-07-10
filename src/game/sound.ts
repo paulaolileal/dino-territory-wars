@@ -40,24 +40,46 @@ const DINO_SPAWN_URLS: Record<DinoKind, string> = {
   pteranodon: "/audio/dino-spawn-sound/ptera-sound.mp3",
 };
 
-// Shared master volume/mute, kept in sync with the background music controls
-// so a single volume slider governs every sound effect in the game as well.
-let masterVolume = 1;
-let muted = false;
+type SoundChannel = "music" | "effects";
 
-export function setSoundVolume(volume: number) {
-  masterVolume = volume;
+// The win jingle plays alongside the music channel (menu/battle themes);
+// every other one-shot sound belongs to the effects channel.
+const CHANNEL_BY_KEY: Record<SoundKey, SoundChannel> = {
+  win: "music",
+  click: "effects",
+  hit: "effects",
+  miss: "effects",
+  lose: "effects",
+};
+
+let musicSfxVolume = 1;
+let musicSfxMuted = false;
+let effectsVolume = 1;
+let effectsMuted = false;
+
+export function setMusicSfxVolume(volume: number) {
+  musicSfxVolume = volume;
 }
 
-export function setSoundMuted(value: boolean) {
-  muted = value;
+export function setMusicSfxMuted(value: boolean) {
+  musicSfxMuted = value;
 }
 
-function playUrl(url: string, relativeVolume: number) {
-  if (muted || masterVolume <= 0) return;
+export function setEffectsVolume(volume: number) {
+  effectsVolume = volume;
+}
+
+export function setEffectsMuted(value: boolean) {
+  effectsMuted = value;
+}
+
+function playUrl(url: string, relativeVolume: number, channel: SoundChannel) {
+  const muted = channel === "music" ? musicSfxMuted : effectsMuted;
+  const master = channel === "music" ? musicSfxVolume : effectsVolume;
+  if (muted || master <= 0) return;
   try {
     const a = new Audio(url);
-    a.volume = Math.min(1, Math.max(0, relativeVolume * masterVolume));
+    a.volume = Math.min(1, Math.max(0, relativeVolume * master));
     void a.play();
   } catch {
     /* ignore */
@@ -67,15 +89,15 @@ function playUrl(url: string, relativeVolume: number) {
 export function play(key: SoundKey) {
   const url = URLS[key];
   if (!url) return;
-  playUrl(url, 0.4);
+  playUrl(url, 0.4, CHANNEL_BY_KEY[key]);
 }
 
 /** Plays the damage roar/impact sound for the given dino kind when it is hit. */
 export function playDinoDamage(kind: DinoKind) {
-  playUrl(DINO_DAMAGE_URLS[kind], 0.5);
+  playUrl(DINO_DAMAGE_URLS[kind], 0.5, "effects");
 }
 
 /** Plays the spawn/placement sound for the given dino kind when it is placed on the board. */
 export function playDinoSpawn(kind: DinoKind) {
-  playUrl(DINO_SPAWN_URLS[kind], 0.5);
+  playUrl(DINO_SPAWN_URLS[kind], 0.5, "effects");
 }
